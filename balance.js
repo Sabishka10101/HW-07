@@ -55,20 +55,31 @@ let users = [
     }
 ]
 
-    let sum = 0;
+const usersBalances = users.filter(function getUsersBalances(item) {
+    return item.balance > "$2,000.00";
+});
+console.log(usersBalances);
 
-    for (i =0; i < users.length; i++){
-        if (users[i].balance >= '$2,000.00'){
-        console.log(users[i].balance)
-        }
-    }
+const usersPhones = usersBalances.map(function (item) {
+    return item.phone;
+});
+console.log(usersPhones);
 
-    for(i =0; i<users.length; i++){
-        users[i].balance = users[i].balance.slice(1);
-        users[i].balance = users[i].balance.replace(/[.]/, '');
-        users[i].balance = users[i].balance.replace(/[,]/, '');
-        users[i].balance = Number.parseInt(users[i].balance, 10);
-        sum += users[i].balance;
-    }
+let balances = users.map(function (item) {
+    return item.balance;
+});
+console.log(balances);
 
-console.log('Tottal money: $'+ sum)
+let summBalances = balances.map((item) => item.match(/[\d.\+]/g).join(""));
+console.log(summBalances);
+
+function count(summBalances) {
+    let totalSum = 0;
+    summBalances.forEach(function (item) {
+        totalSum += +item;
+    });
+    return totalSum;
+}
+
+console.log(count(summBalances));
+console.log("Total users balances: " + "$" + Math.round(count(summBalances)));
